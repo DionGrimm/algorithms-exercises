@@ -4,18 +4,32 @@ import { App, snapshot, done, clear } from "./sort-visualizer";
 
 import "./sort.css";
 
-function sort(array) {
+function sort(nums) {
   // do cool stuff here
 
   // call snapshot any time you do anything to the array
   // it's okay if you call it with duplicate value array,
   // it will deduplicate for you
-  snapshot(array);
+  for (let i = 1; i < nums.length; i++) {
+    const insertValue = nums[i]
+
+    for (j = i - 1; nums[j] > insertValue && j >= 0; j--) {
+      snapshot(nums);
+      nums[j + 1] = nums[j];
+    }
+
+    snapshot(nums);
+    nums[j + 1] = insertValue;
+  }
+  snapshot(nums);
 }
 
 export default function SortComponent() {
   clear();
   sort(shuffle(range(10)));
   done();
-  return <App />;
+  return <>
+    <App />
+    <h1>Sorfdasft</h1>
+  </>
 }
