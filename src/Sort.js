@@ -10,23 +10,26 @@ function sort(nums) {
   // call snapshot any time you do anything to the array
   // it's okay if you call it with duplicate value array,
   // it will deduplicate for you
-  for (let i = 1; i < nums.length; i++) {
-    const insertValue = nums[i]
-
-    for (j = i - 1; nums[j] > insertValue && j >= 0; j--) {
-      snapshot(nums);
-      nums[j + 1] = nums[j];
-    }
-
     snapshot(nums);
-    nums[j + 1] = insertValue;
-  }
-  snapshot(nums);
+    if (nums.length <= 1) return nums;
+
+    const pivot = nums.pop();
+    const left = [];
+    const right = [];
+  
+    nums.forEach(n => {
+      snapshot(nums);
+      if (n < pivot) left.push(n);
+      else right.push(n);
+    });
+    const result = [...sort(left), pivot, ...sort(right)];
+    snapshot(result);
+    return result;
 }
 
 export default function SortComponent() {
   clear();
-  sort(shuffle(range(10)));
+  sort(shuffle(range(50)));
   done();
   return <>
     <App />
